@@ -1,0 +1,61 @@
+\e[32;1m
+--------------------------
+ Classaxe Multimedia LAMP
+--------------------------\e[0;32m
+
+\e[1mSPECIAL THANKS:\e[0;32m
+  The vagrant environment used for this project is forked from one developed by \e[1mDemac Media, Toronto, Canada\e[0;32m
+  The original version may be found at https://github.com/DemacMedia/vagrant-lamp
+  Access sites in this vagrant instance using IP address \e[33m###external_ip###\e[0;32m
+
+The following functions and aliases are available:
+
+\e[1mGENERAL:\e[0;32m
+  mem               - Shows percentage of memory you have remaining in this VM environment
+  vhelp             - Displays this help message
+  vstatus           - Displays info on running services and how much memory is in use
+  addtocrontab      - Adds a command to the crontab - use like this: \e[33maddtocrontab "0 0 1 * *" "echo hello"\e[0;32m
+
+\e[1mPROJECTS:\e[0;32m
+  installCiyt       - Installs the 'Churches In Your Town' dev site, built on the Ecclesiact Website platform
+  installDrupal     - Installs a basic Drupal 8 system into which CIYT functionality can be transplanted
+  installRxx        - Installs the RNA / REU / RWW Radio Beacon Logging system
+
+\e[1mMYSQL:\e[0;32m
+  backupMysql       - Makes a dump of all your mysql databases and users into /srv/backup/mysql
+                      This is shared on your host machine so will survive a \e[33mvagrant destroy\e[0;32m
+  restoreMysql      - Restores all your mysql databases and users from /srv/backup/mysql.
+                      This is shared on your host machine so will survive a \e[33mvagrant destroy\e[0;32m
+
+\e[1mMAGENTO:\e[0;32m
+  cac               - Clears cache
+  connectDb         - Connects to the site database - e.g. from magento base folder:
+                        \e[33mecho "SELECT * from core_config_data WHERE path in('web/unsecure/base_url','web/secure/base_url');" | connectDb\e[0;32m  
+  err               - Shows last error report (if any)
+  getMSetting       - Get any setting from magento's local.xml or env.php - e.g. from magento base folder:
+                        \e[33mgetMSetting 'dbname'\e[0;32m
+  m1m2              - Identifies whether your instance is M1 or M2
+  n98               - The n98-magerun / n98-magerun2 tools are available for you to use from any magento website home directory
+                        \e[33mn98\e[0;32m will choose the correct one for you automatically -
+                        e.g. \e[33mn98 sys:info\e[0;32m shows system info for both M1 or M2 systems
+
+\e[1mPHP:\e[0;32m
+  phpRestart        - restarts all installed PHP FPM services
+  xdebug 0|1        - Enables / Disables xdebug for all installed PHP versions (switching off saves time and memory)
+
+  The following PHP versions are available with this release and may be invoked in shell via their aliases:
+###php_versions###\e[0;32m
+\e[1mWEB:\e[0;32m
+  backupWebconfig   - Makes a dump of all your VHost configuration settings and SSL certificates into /srv/backup
+                      This is shared on your host machine so will survive a \e[33mvagrant destroy\e[0;32m
+  restoreWebconfig  - Restores all of your VHost configuration settings and SSL certificates from /srv/backup
+                      This is shared on your host machine so will survive a \e[33mvagrant destroy\e[0;32m
+  vhost             - Use this to add, remove or list vhosts, or to see a simple list of sites available
+  solr              - Use this to add, remove or list cores to solr
+  redis             - Use this to add  remove or list redis instances
+  www               - Switches you to the /srv/www directory
+
+\e[1mWEBSITES INSTALLED:\e[0;32m
+  The following websites are installed and available at IP address \e[33m###external_ip###\e[0;32m
+  Type \e[33mvhost sites\e[0;32m to see this list again
+###vhost_sites###\e[0m

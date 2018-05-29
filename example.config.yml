@@ -1,0 +1,32 @@
+---
+vagrant_hostname: dev.classaxe.com
+vagrant_machine_name: clamp
+vagrant_ip: 192.168.77.77
+
+# Allow VM to be accessed via a public network interface on your host.
+# Vagrant boxes are insecure by default, so be careful. You've been warned!
+# See: https://docs.vagrantup.com/v2/networking/public_network.html
+vagrant_public_ip: ""
+
+# A list of synced folders, with the keys 'local_path', 'destination', and
+# a 'type' of [nfs|rsync|smb] (leave empty for slow native shares). See
+# windows example for local_path C:\\clamp\\www
+vagrant_synced_folders:
+  - local_path: ~/clamp/www
+    destination: /srv/www
+    type:
+    create: true
+
+  - local_path: ~/clamp/mysql
+    destination: /srv/mysql
+    type:
+    create: true
+
+  - local_path: ~/clamp/backup
+    destination: /srv/backup
+    type:
+    create: true
+
+# Memory and CPU to use for this VM.
+vagrant_memory: 4096
+vagrant_cpus: 2
