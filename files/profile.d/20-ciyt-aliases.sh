@@ -65,7 +65,7 @@ function installCiyt {
     echo -e "\e[32m[OK]\e[0m";
 
     echo -en "  Setting up crontab                                  "
-    addtocrontab "* * * * *" "wget https://dev.churchesinyourtown.com/cron/ -q --no-check-certificate -O /dev/null"
+    addtocrontab "* * * * *" "wget https://dev.churchesinyourtown.com/cron/ -q --no-check-certificate -O /dev/null" > /dev/null 2>&1
     echo -e "\e[32m[OK]\e[0m";
 
     external_ip=$(cat /vagrant/config.yml | grep vagrant_ip | cut -d' ' -f2 | xargs)

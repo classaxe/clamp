@@ -9,11 +9,11 @@ function installRxx {
     DB_NAME=rxx
 
     if [ ! -d /srv/www/cam ] ; then
-        echo -en "  Setting up base site for \e[33;1m${SITE_DOMAIN}\e[0m "
+        echo -en "  Cloning RXX Codebase                                "
         git clone https://github.com/classaxe/rxx.git /srv/www/cam/dx/ndb          > /dev/null 2>&1
         echo -e "\e[32m[OK]\e[0m";
     else
-        echo -e "\e[32mSite already present - to completely rebuild it:"
+        echo -e "\e[32mSite already present - to completely rebuild it execute these commands:"
         echo -e "\e[33;1m  cd /srv/www; rm -rf /srv/www/cam\e[0m\e[32m\e[0m\n"
         echo -en "  Updating RXX Codebase                               "
         cd /srv/www/cam/dx/ndb
