@@ -38,6 +38,10 @@ function phpErrors() {
     done;
 }
 
+function phpDefault {
+    sudo /opt/phpfarm/inst/bin/switch-phpfarm $1
+}
+
 function makePhpShortformAliases {
     local arr config_php i phpa
     source /vagrant/config_php.sh

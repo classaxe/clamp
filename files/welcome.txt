@@ -40,9 +40,10 @@ The following functions and aliases are available:
                         e.g. \e[33mn98 sys:info\e[0;32m shows system info for both M1 or M2 systems
 
 \e[1mPHP:\e[0;32m
-  phpRestart        - restarts all installed PHP FPM services
-  phpErrors 0|1     - Enables / Disables display_errors and display_startup_errors for all installed PHP versions
-  xdebug 0|1        - Enables / Disables xdebug for all installed PHP versions (switching off saves time and memory)
+  phpDefault [ver]  - Shows installed PHP versions and which is CLI default, and allows this to be easily changed
+  phpErrors   0|1   - Enables / Disables display_errors and display_startup_errors for all installed PHP versions
+  phpRestart        - Restarts all installed PHP FPM services
+  xdebug      0|1   - Enables / Disables xdebug for all installed PHP versions (switching off saves time and memory)
 
   The following PHP versions are available with this release and may be invoked in shell via their aliases:
 ###php_versions###\e[0;32m
