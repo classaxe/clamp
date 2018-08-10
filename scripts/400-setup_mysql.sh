@@ -6,31 +6,6 @@ echo "******************************"
 # Enable trace printing and exit on the first error
 set -ex
 
-# If mysql is already here, move existing data to /srv/mysql/data and change my.cnf to point there
-if [ -f /etc/init.d/mysql* ]; then
-    service mysql stop
-
-    sed -i "s/datadir.*/datadir = \/srv\/mysql\/data/" /etc/mysql/my.cnf
-    if [ ! -d /srv/mysql/data/mysql ]; then
-        echo "Copying mysql databases from /var/lib/mysql/ to /srv/mysql/data ..."
-        cp -r /var/lib/mysql/* /srv/mysql/data
-    else
-        echo "Not moving mysql databases from /var/lib/mysql/ to /srv/mysql/data since data is already present there"
-    fi
-
-    # Make sure mysql belongs to the vagrant group for read/write permissions on mound
-    usermod -a -G vagrant mysql
-
-    service mysql start
-
-    # Get password for debian-sys-maintainer in case we have existing databases which need to have this set to a new value
-    debian_sys_maint_pwd=`sudo grep password /etc/mysql/debian.cnf | head -n1 | cut -d' ' -f3`
-    export MYSQL_PWD='root'
-    echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root';" | mysql -u'root'
-    echo "GRANT ALL PRIVILEGES ON *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '${debian_sys_maint_pwd}';" | mysql -u'root'
-    export MYSQL_PWD=''
-fi
-
 if [ ! -f /etc/init.d/mysql* ]; then
     wget --progress=bar:force https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb
     dpkg -i percona-release_0.1-4.$(lsb_release -sc)_all.deb

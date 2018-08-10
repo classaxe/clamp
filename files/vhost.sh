@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
+vhost_version=1.0.4
+
 function show_header {
     echo -e "\e[32m"
     echo -e "***********************"
-    echo -e "* vhost version 1.0.3 *"
+    echo -e "* vhost version ${vhost_version} *"
     echo -e "***********************\e[0m"
 }
 
@@ -24,6 +26,7 @@ Options:
                        -a www.example.com -a example.ca -a www.example.ca
   -p PHPVersion      : PHP Version:
                        Optional - to add PHP-FPM proxy support, choose one of these:  [###php_versions###]
+  -P HTTPPort        : Port number to use for HTTP traffic - default is 80, choose another value to use Varnish
   -s CertPath        : ***SELF SIGNED CERTIFICATE ARE AUTOMATICALLY CREATED FOR EACH VHOST USE THIS TO OVERRIDE***
                        File path to the SSL certificate. Directories only, no file name. OPTIONAL
                        If using an SSL Certificate, also creates a port :443 vhost as well.
@@ -42,6 +45,7 @@ Options:
                        Certificate Name "example.com" becomes "example.com.key" and "example.com.crt". OPTIONAL
                        Will default to ServerName
   -f                 : Force mode - silently reponds 'yes' to any confirmation messages
+  -v                 : Shows version number and exits
 
 
 
@@ -70,7 +74,7 @@ function get_php_versions {
 #
 function create_vhost {
 cat <<- _EOF_
-<VirtualHost *:8090>
+<VirtualHost *:###HttpPort###>
     ServerAdmin webmaster@localhost
     ServerName  $ServerName
     DocumentRoot $DocumentRoot###ServerAlias######PhpProxy###
@@ -180,7 +184,7 @@ function add_vhost {
         PhpProxy="\n\n    # PHP proxy specifications\n    <Proxy fcgi:\/\/127.0.0.1:$PhpPort>\n        ProxySet timeout=1800\n    <\/Proxy>\n\n    <FilesMatch \\\.php\\$>\n        SetHandler \"proxy:fcgi:\/\/127.0.0.1:$PhpPort\"\n    <\/FilesMatch>"
     fi
 
-    create_vhost | sed "s|###ServerAlias###|${ServerAlias}|g" | sed "s|###PhpProxy###|${PhpProxy}|g" > /etc/apache2/sites-available/200-${ServerName}.conf
+    create_vhost | sed "s|###ServerAlias###|${ServerAlias}|g" | sed "s|###PhpProxy###|${PhpProxy}|g" | sed "s|###HttpPort###|${HttpPort}|g" > /etc/apache2/sites-available/200-${ServerName}.conf
 
     # Make directory to place SSL Certificate if it doesn't exists
     if [[ ! -d $KeyPath ]]; then
@@ -313,6 +317,7 @@ CertPath=""
 KeyPath=""
 ServerAlias=""
 PhpVersion=""
+HttpPort=80
 force="n"
 Task=''
 
@@ -347,10 +352,14 @@ done
 # Parse flags
 ServerAlias=""
 Force='n'
-while getopts "d:s:k:a:p:n:c:h:ARLSf" OPTION; do
+while getopts "d:s:k:a:p:P:n:c:h:v:ARLSf" OPTION; do
     case $OPTION in
         h)
             show_usage
+            ;;
+        v)
+            echo ${vhost_version}
+            exit 1
             ;;
         d)
             DocumentRoot=$OPTARG
@@ -365,6 +374,9 @@ while getopts "d:s:k:a:p:n:c:h:ARLSf" OPTION; do
             ;;
         p)
             PhpVersion=$OPTARG
+            ;;
+        P)
+            HttpPort=$OPTARG
             ;;
         s)
             CertPath=$OPTARG

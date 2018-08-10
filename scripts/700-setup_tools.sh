@@ -15,7 +15,7 @@ if [ ! -f /usr/local/bin/composer ]; then
     chmod +x /usr/local/bin/composer
 fi
 
-# Set up n98 for M1, M2 and automatic selection based on platform in use
+# Setup n98 for M1, M2 and automatic selection based on platform in use
 if [ ! -f /usr/local/bin/n98 ] || [ ! -f /usr/local/bin/n98-1 ] || [ ! -f /usr/local/bin/n98-2 ]; then
     cd /tmp
     rm -f n98-magerun*
@@ -32,18 +32,10 @@ if [ ! -f /usr/local/bin/n98 ] || [ ! -f /usr/local/bin/n98-1 ] || [ ! -f /usr/l
     chmod +x /usr/local/bin/n98
 fi
 
-# Setup modman
-if [ ! -f /usr/local/bin/modman ]; then
-    cd /tmp
-    bash < <(curl -s -L https://raw.github.com/colinmollenhour/modman/master/modman-installer)
-    mv ~/bin/modman /usr/local/bin/modman
-    chmod +x /usr/local/bin/modman
-fi
-
-# Setup PHPUnit
-if [ ! -f /usr/local/bin/phpunit ]; then
-    cd /tmp
-    wget --progress=bar:force https://phar.phpunit.de/phpunit.phar
-    mv phpunit.phar /usr/local/bin/phpunit
-    chmod +x /usr/local/bin/phpunit
+# Setup PHP Code Sniffer and Code fixer:
+if [ ! -f /usr/local/bin/phpcs ]; then
+    cd /usr/local/bin;
+    git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
+    git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
+    ./bin/phpcs --config-set installed_paths ../wpcs
 fi
