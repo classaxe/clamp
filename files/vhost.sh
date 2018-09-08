@@ -266,7 +266,7 @@ function show_error {
 }
 
 function vhost_list {
-    local a arr config configs config_php d i n p port phpn phpp phpv out
+    local a arr config configs config_php d h i n p port phpn phpp phpv out
     configs="$(ls -1 /etc/apache2/sites-enabled/200-*.conf 2>/dev/null)"
     source /vagrant/config_php.sh
 
@@ -277,6 +277,7 @@ function vhost_list {
         a=$(echo "$file" | head -n20 | grep 'ServerAlias' | xargs | sed "s/ServerAlias /-a*/g")
         d=$(echo "$file" | grep 'DocumentRoot' | head -n1 | xargs | cut -d' ' -f2)
         n=$(echo "$file" | grep 'ServerName ' | head -n1 | xargs | cut -d' ' -f2)
+        h=$(echo "$file"   | grep '<VirtualHost' | cut -d':' -f2 | head -n1 | cut -d'>' -f1)
         port=$(echo "$file" | grep '<Proxy fcgi://127.0.0.1:' | xargs | head -n1 | cut -d':' -f3 | cut -d'>' -f1)
         p=''
         for i in "${config_php[@]}"; do
@@ -293,8 +294,9 @@ function vhost_list {
         if [ "$d" != "" ] ; then d=" -d*$d" ; fi
         if [ "$n" != "" ] ; then n=" -n*$n" ; fi   
         if [ "$p" != "" ] ; then p=" -p*$p" ; fi
+        if [ "$h" != "" ] ; then h=" -P*$h" ; fi
 
-        out="${out}****sudo*vhost*add*${n}${p}${d}${a} -f;
+        out="${out}****sudo*vhost*add*${n}${p}${h}${d}${a} -f;
 "
     done
     echo "${out}" | column -t | sed "s/*/ /g"
