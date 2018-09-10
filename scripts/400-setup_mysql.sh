@@ -16,13 +16,18 @@ if [ ! -f /etc/init.d/mysql* ]; then
     apt-get install -y percona-server-server-5.6 percona-server-client-5.6 2>&1
     service mysql stop
 
-    printf "[mysqld]\nbind-address = 0.0.0.0\nmax_allowed_packet = 64M\ndatadir = /srv/mysql/data\ninnodb_log_file_size = 256M\n" >> /etc/mysql/my.cnf
+    printf "[mysqld]\nbind-address = 0.0.0.0\nmax_allowed_packet = 64M\ninnodb_log_file_size = 256M\n" >> /etc/mysql/my.cnf
 
-    if [ ! -d /srv/mysql/data/mysql ]; then
-        echo "Copying mysql databases from /var/lib/mysql/ to /srv/mysql/data ..."
-        cp -r /var/lib/mysql/* /srv/mysql/data
-    else
-        echo "Not moving mysql databases from /var/lib/mysql/ to /srv/mysql/data since data is already present there"
+    # mysql_external is defined in 000-setup_config.sh
+    if [ "${mysql_external_data}" = "y" ]; then
+        printf "datadir = /srv/mysql/data\n" >> /etc/mysql/my.cnf
+
+        if [ ! -d /srv/mysql/data/mysql ]; then
+            echo "Copying mysql databases from /var/lib/mysql/ to /srv/mysql/data ..."
+            cp -r /var/lib/mysql/* /srv/mysql/data
+        else
+            echo "Not moving mysql databases from /var/lib/mysql/ to /srv/mysql/data since data is already present there"
+        fi
     fi
 
     # Make sure mysql belongs to the vagrant group for read/write permissions on mound
