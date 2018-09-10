@@ -37,5 +37,5 @@ if [ ! -f /usr/local/bin/phpcs ]; then
     cd /usr/local/bin;
     git clone https://github.com/squizlabs/PHP_CodeSniffer.git phpcs
     git clone -b master https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git wpcs
-    # sudo phpcs --config-set installed_paths ../wpcs
+    sudo cp /vagrant/files/CodeSniffer.conf /usr/local/bin/phpcs
 fi
