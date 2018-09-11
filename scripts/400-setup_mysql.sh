@@ -6,6 +6,8 @@ echo "******************************"
 # Enable trace printing and exit on the first error
 set -ex
 
+source /vagrant/config_options.sh
+
 if [ ! -f /etc/init.d/mysql* ]; then
     wget --progress=bar:force https://repo.percona.com/apt/percona-release_0.1-4.$(lsb_release -sc)_all.deb
     dpkg -i percona-release_0.1-4.$(lsb_release -sc)_all.deb

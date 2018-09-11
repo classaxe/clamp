@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+echo "******************************"
+echo "* 304-setup_ruby.sh          *"
+echo "******************************"
+
+# Enable trace printing and exit on the first error
+set -ex
+
+source /vagrant/config_options.sh
 
 if [ "${install_ruby}" = "y" ]; then
     if [ ! -f /etc/apt/sources.list.d/passenger.list ]; then

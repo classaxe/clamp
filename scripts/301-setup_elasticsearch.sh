@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "******************************"
-echo "*  setup_elasticsearch.sh    *"
+echo "* 301-setup_elasticsearch.sh *"
 echo "******************************"
 
 # Enable trace printing and exit on the first error

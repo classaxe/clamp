@@ -6,7 +6,8 @@ echo "******************************"
 # Enable trace printing and exit on the first error
 set -ex
 
-if [ "${setup_varnish}" = "y" ]; then 
+source /vagrant/config_options.sh
+if [ "$install_varnish" = "y" ]; then 
     apt-get install -y varnish 2>&1
     sed -i.bak 's/.port = "8080";$/.port = "8090";\n    .connect_timeout = 30s;\n    .first_byte_timeout = 3000s;\n    .between_bytes_timeout = 50s;/' /etc/varnish/default.vcl
 

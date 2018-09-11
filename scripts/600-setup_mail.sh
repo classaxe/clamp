@@ -41,20 +41,20 @@ EOL
     sudo service mailhog start
 fi
 
-if [ ! -f /etc/apache2/sites-available/100-mailhog.demacmedia.com.conf ]; then
+if [ ! -f /etc/apache2/sites-available/100-mailhog.dev.classaxe.com.conf ]; then
     # Add Vhost
-    sudo tee /etc/apache2/sites-available/100-mailhog.demacmedia.com.conf <<EOL
+    sudo tee /etc/apache2/sites-available/100-mailhog.dev.classaxe.com.conf <<EOL
 <VirtualHost *:8090>
   ProxyPreserveHost On
   ProxyRequests Off
-  ServerName mailhog.demacmedia.com
+  ServerName mailhog.dev.classaxe.com
   ProxyPass / http://127.0.0.1:8025/
   ProxyPassReverse / http://127.0.0.1:8025/
 </VirtualHost>
 EOL
 
     # Enable Vhost
-    sudo a2ensite 100-mailhog.demacmedia.com
+    sudo a2ensite 100-mailhog.dev.classaxe.com
 
     # Reload apache
     sudo service apache2 reload
