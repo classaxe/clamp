@@ -39,11 +39,15 @@ function vstatus {
     echo -e "\n\033[1;32mvstatus - Vagrant Status\033[0;32m"
     echo -e "  Disk Used:      `df -h --output='pcent' / | tail -n1` (Vagrant) `df -h --output='pcent' /vagrant | tail -n1` (Host)"
     echo -e "  `free | awk '/Mem/{printf(\"Memory used:     %.0f% (RAM)\"), $3/$2*100} /buffers\/cache/{printf(\"      %.0f% (Buffers)\"), 100-($4/($3+$4)*100)}'`\n"
-    echo -e "  Apache2 Status:  $(if [[ $(sudo service apache2      status | grep 'not running') == '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)"
-    echo -e "  Mysql Status:    $(if [[ $(sudo service mysql        status | grep 'is stopped')  == '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)"
-    echo -e "  Redis Status:    $(if [[ $(sudo service redis-server status | grep 'not running') == '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)"
+    echo -e "\n\033[1;32mService Status \033[0m"
+    echo -e "  \033[32mApache2 Status:   $(if [[ $(sudo service apache2      status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0:32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
+    echo -e "  \033[32mCron Status:      $(if [[ $(sudo service cron         status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
+    echo -e "  \033[32mMemcached Status: $(if [[ $(sudo service memcached    status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
+    echo -e "  \033[32mMysql Status:     $(if [[ $(sudo service mysql        status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
+    echo -e "  \033[32mNTP Status:       $(if [[ $(sudo service ntp          status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
+    echo -e "  \033[32mRedis Status:     $(if [[ $(sudo service redis-server status | grep 'active (running)') != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
     if [ -f /etc/default/varnish ]; then
-        echo -e "  Varnish Status:  $(if [[ $(sudo pgrep varnishd) != '' ]]; then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)"
+        echo -e "  \033[32mVarnish Status:   $(if [[ $(sudo pgrep varnishd) != '' ]];                                        then echo '\033[1;32mOK\033[0;32m'; else echo '\033[1;31mStopped\033[0;32m'; fi)\033[0m"
     fi
     echo -e "\033[0m"
 }
