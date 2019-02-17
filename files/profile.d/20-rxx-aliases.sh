@@ -27,8 +27,7 @@ function installRxx {
     echo -e "\e[32m[OK]\e[0m";
 
     echo -en "  Fetching Database file                              "
-    mkdir -p /srv/www/cam/dx/ndb/sql
-    cd       /srv/www/cam/dx/ndb/sql
+    cd       /tmp
     rm -f    rxx.sql.gz
     wget https://www.classaxe.com/dx/ndb/rxx.sql.gz> /dev/null 2>&1
     cd     /srv/www/cam
@@ -38,7 +37,7 @@ function installRxx {
     echo "DROP SCHEMA IF EXISTS ${DB_NAME};" | MYSQL_PWD=root mysql -uroot
     echo "CREATE SCHEMA ${DB_NAME}" | MYSQL_PWD=root mysql -uroot
     echo "GRANT DELETE,INSERT,SELECT,UPDATE ON ${DB_NAME}.* to ${DB_USER}@localhost identified by '${DB_PASS}'" | MYSQL_PWD=root mysql -uroot
-    zcat /srv/www/cam/dx/ndb/sql/rxx.sql.gz | MYSQL_PWD=root mysql -uroot rxx
+    zcat /tmp/rxx.sql.gz | MYSQL_PWD=root mysql -uroot rxx
     echo -e "\e[32m[OK]\e[0m";
     external_ip=$(cat /vagrant/config.yml | grep vagrant_ip | cut -d' ' -f2 | xargs)
     echo -e "\n  Add the following line to your host file:"
