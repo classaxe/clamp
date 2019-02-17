@@ -20,6 +20,7 @@ The following functions and aliases are available:
   installCiyt       - Installs the 'Churches In Your Town' dev site, built on the Ecclesiact Website platform
   installDrupal     - Installs a basic Drupal 8 system into which CIYT functionality can be transplanted
   installRxx        - Installs the RNA / REU / RWW Radio Beacon Logging system
+  installRxx2       - Installs the new Symfony 4.2 version of the RNA / REU / RWW radio beacon logging system
 
 \e[1mMYSQL:\e[0;32m
   backupMysql       - Makes a dump of all your mysql databases and users into /srv/backup/mysql
