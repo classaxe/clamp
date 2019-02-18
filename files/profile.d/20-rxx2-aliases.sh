@@ -26,6 +26,9 @@ function installRxx2 {
         echo -en "  Adding Mysql DSN Connection string to .env file     "
         sed -i 's/mysql:\/\/db_user:db_password@127.0.0.1:3306\/db_name/mysql:\/\/rxx:clamp_rxx_777@localhost:3306\/rxx?charset=UTF8/' .env
         echo -e "\e[32m[OK]\e[0m";
+
+        echo -en "  Setting admin logon values in .env file             "
+        sed -i 's/###< symfony\/framework-bundle ###/ADMIN_USER=admin\nADMIN_PASS=777\n###< symfony\/framework-bundle ###/' .env
     else
         echo -e "\e[32mSite already present - to completely rebuild it execute these commands:"
         echo -e "\e[33;1m  cd /srv/www; rm -rf /srv/www/rxx\e[0m\e[32m\e[0m\n"
