@@ -17,6 +17,9 @@ function installRxx2 {
         cd /srv/www/rxx
         composer install
 
+        echo -e "  Executing Grunt install:"
+        npm install grunt --save-dev
+
         echo -en "  Installing GeoIP Database                           "
         sudo mkdir -p /usr/local/share/GeoIP > /dev/null 2>&1;
         sudo chown vagrant:vagrant /usr/local/share/GeoIP > /dev/null 2>&1;

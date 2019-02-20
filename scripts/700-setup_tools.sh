@@ -15,6 +15,14 @@ if [ ! -f /usr/local/bin/composer ]; then
     chmod +x /usr/local/bin/composer
 fi
 
+# Setup Node, NPM and Grunt
+if [ ! -f /usr/bin/npm ]; then
+    apt-get install python-software-properties
+    curl -sL https://deb.nodesource.com/setup_8.x | bash -
+    apt-get install -y nodejs
+    npm install -g grunt
+fi 
+
 # Setup n98 for M1, M2 and automatic selection based on platform in use
 if [ ! -f /usr/local/bin/n98 ] || [ ! -f /usr/local/bin/n98-1 ] || [ ! -f /usr/local/bin/n98-2 ]; then
     cd /tmp
