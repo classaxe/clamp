@@ -17,7 +17,7 @@ fi
 
 # Setup Node, NPM and Grunt
 if [ ! -f /usr/bin/npm ]; then
-    apt-get install python-software-properties
+    apt-get install -y python-software-properties
     curl -sL https://deb.nodesource.com/setup_8.x | bash -
     apt-get install -y nodejs
     npm install -g grunt
