@@ -72,3 +72,9 @@ function installRxx2 {
     echo -e "    Pass:         \e[33;1m777\e[0m\n"
 }
 
+function i18n {
+    ./bin/console translation:update --force en
+    ./bin/console translation:update --force de
+    ./bin/console translation:update --force fr
+    ./bin/console translation:update --force es
+}

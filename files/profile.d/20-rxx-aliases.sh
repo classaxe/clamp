@@ -10,6 +10,7 @@ function installRxx {
 
     if [ ! -d /srv/www/cam ] ; then
         echo -en "  Cloning RXX Codebase                                "
+        mkdir -p /srv/www/cam/dx/ndb
         git clone https://github.com/classaxe/rxx.git /srv/www/cam/dx/ndb          > /dev/null 2>&1
         echo -e "\e[32m[OK]\e[0m";
     else
