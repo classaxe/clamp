@@ -1,3 +1,5 @@
+alias rxx='cd /srv/www/cam/dx/ndb'
+
 function installRxx {
     echo -e "\n\e[32m**************"
     echo -e "* installRxx *"
