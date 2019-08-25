@@ -79,6 +79,6 @@ function i18n {
     ./bin/console translation:update --force de
     ./bin/console translation:update --force fr
     ./bin/console translation:update --force es
-    sed -i 's/<target>__/<target>'                        ./translations/messages.en.xlf
+    sed -i 's/<target>__/<target>/'                       ./translations/messages.en.xlf
     sed -i 's/<target><!\[CDATA\[__/<target><!\[CDATA\[/' ./translations/messages.en.xlf
 }
