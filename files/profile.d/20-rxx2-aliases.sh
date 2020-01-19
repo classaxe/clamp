@@ -47,7 +47,7 @@ function installRxx2 {
     fi
 
     echo -en "  Setting up website       \e[33;1m${SITE_DOMAIN}\e[0m           "
-    sudo vhost add -n ${SITE_DOMAIN} -d /srv/www/rxx/public -p 7.2 -f > /dev/null 2>&1
+    sudo vhost add -n ${SITE_DOMAIN} -d /srv/www/rxx/public -p 7.3 -f > /dev/null 2>&1
     sudo service apache2 restart > /dev/null 2>&1
     echo -e "\e[32m[OK]\e[0m";
 

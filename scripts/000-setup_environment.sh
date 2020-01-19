@@ -55,7 +55,7 @@ fi
 #Setup PHP compile pre-requisites
 apt-get install -y  build-essential libbz2-dev libmysqlclient-dev libxpm-dev libmcrypt-dev \
     libcurl4-gnutls-dev libxml2-dev libjpeg-dev libpng12-dev libssl-dev pkg-config libreadline-dev \
-    curl autoconf libicu-dev libxslt-dev libfreetype6-dev 2>&1
+    curl autoconf libicu-dev libxslt-dev libfreetype6-dev libzip-dev 2>&1
 
 # Workaround to allow custom scripts added to path with sudo
 if ! grep -q "^#Defaults[[:blank:]]*secure_path" /etc/sudoers ; then

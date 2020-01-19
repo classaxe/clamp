@@ -1,4 +1,5 @@
 # Useful Aliases
+alias a2r='service apache2 restart'
 alias lh='ls -alh'
 alias sudo='sudo '
 alias mem='free | awk '\''/Mem/{printf("Memory used: %.2f%"), $3/$2*100} /buffers\/cache/{printf(", buffers: %.2f%\n"), 100-($4/($3+$4)*100)}'\'''
