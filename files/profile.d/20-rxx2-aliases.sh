@@ -23,9 +23,12 @@ function installRxx2 {
         npm install grunt --save-dev
 
         echo -en "  Installing GeoIP Database                           "
-        sudo mkdir -p /usr/local/share/GeoIP > /dev/null 2>&1;
-        sudo chown vagrant:vagrant /usr/local/share/GeoIP > /dev/null 2>&1;
-        /srv/www/rxx/bin/console geoip2:update  > /dev/null 2>&1;
+        sudo add-apt-repository ppa:maxmind/ppa -y
+        sudo apt update
+        sudo apt install geoipupdate -y
+        sudo echo -e"AccountID 186093\nLicenseKey uGGhEqEovSe36Niu\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf
+        sudo ln -nsf /usr/share/GeoIP/GeoLite2-City.mmdb /usr/local/share/GeoIP/GeoIP2-City.mmdb
+        sudo geoipupdate
         echo -e "\e[32m[OK]\e[0m";
 
         echo -en "  Adding Mysql DSN Connection string to .env file     "
