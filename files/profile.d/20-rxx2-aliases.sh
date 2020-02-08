@@ -53,7 +53,8 @@ function installRxx2 {
     sudo service apache2 restart > /dev/null 2>&1
     echo -e "\e[32m[OK]\e[0m";
 
-    read -n1 -p "Import Database (Y/n)?" choice
+    read -n1 -p "  - Import Database (Y/n)? " choice
+    echo ""
     if [[ $choice =~ ^(Y|y| ) ]] || [[ -z $choice ]]; then
         echo -en "  Fetching Database file                              "
         cd       /tmp
