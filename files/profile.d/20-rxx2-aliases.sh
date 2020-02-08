@@ -26,8 +26,7 @@ function installRxx2 {
         sudo add-apt-repository ppa:maxmind/ppa -y
         sudo apt update
         sudo apt install geoipupdate -y
-        sudo echo -e"AccountID 186093\nLicenseKey uGGhEqEovSe36Niu\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" > /etc/GeoIP.conf
-        sudo ln -nsf /usr/share/GeoIP/GeoLite2-City.mmdb /usr/local/share/GeoIP/GeoIP2-City.mmdb
+        echo -e "AccountID 186093\nLicenseKey uGGhEqEovSe36Niu\nEditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country" | sudo tee /etc/GeoIP.conf > /dev/null
         sudo geoipupdate
         echo -e "\e[32m[OK]\e[0m";
 
@@ -54,21 +53,21 @@ function installRxx2 {
     sudo service apache2 restart > /dev/null 2>&1
     echo -e "\e[32m[OK]\e[0m";
 
-    echo -en "  Fetching Database file                              "
-    cd       /tmp
-    rm -f    rxx.sql.gz
-    wget https://www.classaxe.com/dx/ndb/rxx.sql.gz> /dev/null 2>&1
-    echo -e "\e[32m[OK]\e[0m";
-    cd /srv/www/rxx
-
-    echo -en "  Setting up Database                                 "
-    echo "DROP SCHEMA IF EXISTS ${DB_NAME};" | MYSQL_PWD=root mysql -uroot
-    echo "CREATE SCHEMA ${DB_NAME}" | MYSQL_PWD=root mysql -uroot
-    echo "GRANT DELETE,INSERT,SELECT,UPDATE ON ${DB_NAME}.* to ${DB_USER}@localhost identified by '${DB_PASS}'" | MYSQL_PWD=root mysql -uroot
-    zcat /tmp/rxx.sql.gz | MYSQL_PWD=root mysql -uroot rxx
-    echo -e "\e[32m[OK]\e[0m";
-
-
+    read -n1 -p "Import Database (Y/n)?" choice
+    if [[ $choice =~ ^(Y|y| ) ]] || [[ -z $choice ]]; then
+        echo -en "  Fetching Database file                              "
+        cd       /tmp
+        rm -f    rxx.sql.gz
+        wget https://www.classaxe.com/dx/ndb/rxx.sql.gz> /dev/null 2>&1
+        echo -e "\e[32m[OK]\e[0m";
+        cd /srv/www/rxx
+        echo -en "  Setting up Database                                 "
+        echo "DROP SCHEMA IF EXISTS ${DB_NAME};" | MYSQL_PWD=root mysql -uroot
+        echo "CREATE SCHEMA ${DB_NAME}" | MYSQL_PWD=root mysql -uroot
+        echo "GRANT DELETE,INSERT,SELECT,UPDATE ON ${DB_NAME}.* to ${DB_USER}@localhost identified by '${DB_PASS}'" | MYSQL_PWD=root mysql -uroot
+        zcat /tmp/rxx.sql.gz | MYSQL_PWD=root mysql -uroot rxx
+        echo -e "\e[32m[OK]\e[0m";
+    fi 
     external_ip=$(cat /vagrant/config.yml | grep vagrant_ip | cut -d' ' -f2 | xargs)
     echo -e "\n  Add the following line to your host file:"
     echo -e "    \e[32;1m${external_ip}      ${SITE_DOMAIN}\e[0m\n"
