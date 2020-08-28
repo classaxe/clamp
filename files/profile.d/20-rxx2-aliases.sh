@@ -67,13 +67,15 @@ function installRxx2 {
         echo "CREATE SCHEMA ${DB_NAME}" | MYSQL_PWD=root mysql -uroot
         echo "GRANT DELETE,INSERT,SELECT,UPDATE ON ${DB_NAME}.* to ${DB_USER}@localhost identified by '${DB_PASS}'" | MYSQL_PWD=root mysql -uroot
         zcat /tmp/rxx.sql.gz | MYSQL_PWD=root mysql -uroot rxx
-        echo "UPDATE rxx.users SET password='\$2y\$10\$WPcwyLosEfHA.tk3LKcBluumFLaLQJGcIfU7eo/i5z5YWzIEy4DGO' WHERE ID=1" | MYSQL_PWD=root mysql -uroot
+        echo "UPDATE rxx.users SET password='\$2y\$10\$WPcwyLosEfHA.tk3LKcBluumFLaLQJGcIfU7eo/i5z5YWzIEy4DGO'" | MYSQL_PWD=root mysql -uroot
         echo -e "\e[32m[OK]\e[0m";
     fi 
     external_ip=$(cat /vagrant/config.yml | grep vagrant_ip | cut -d' ' -f2 | xargs)
     echo -e "\n  Add the following line to your host file:"
     echo -e "    \e[32;1m${external_ip}      ${SITE_DOMAIN}\e[0m\n"
     echo -e "  Access the site at:\n    \e[32;1mhttps://${SITE_DOMAIN}\e[0m\n"
+    echo -e "    Master Admin: \e[33;1mmasteradmin\e[0m"
+    echo -e "    Pass:         \e[33;1m777\e[0m\n"
     echo -e "    Site Admin:   \e[33;1madmin\e[0m"
     echo -e "    Pass:         \e[33;1m777\e[0m\n"
 }
